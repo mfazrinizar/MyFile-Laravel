@@ -30,6 +30,6 @@ class RegistrationTest extends TestCase
             ->assertHasNoErrors()
             ->assertRedirect(route('login', absolute: false));
 
-        $this->assertAuthenticated();
+        $this->assertGuest();
     }
 }
