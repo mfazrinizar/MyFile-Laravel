@@ -52,4 +52,3 @@ interface Factory
      */
     public function id();
 }
-

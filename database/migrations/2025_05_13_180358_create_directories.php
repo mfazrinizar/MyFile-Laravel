@@ -12,14 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('directories', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->uuid('user_id');
+            $table->ulid('id')->primary();
+            $table->foreignUlid('user_id')->constrained('users')->onDelete('cascade'); 
             $table->string('name');
-            $table->uuid('parent_id')->nullable(); // for nested directories
+            $table->foreignUlid('parent_id')->nullable()->constrained('directories')->onDelete('cascade');
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('parent_id')->references('id')->on('directories')->onDelete('cascade');
         });
     }
 

@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 
 class File extends Model
 {
-    use HasFactory, HasUuids;
+    use HasFactory, HasUlids;
 
     public $incrementing = false;
     protected $keyType = 'string';
@@ -21,12 +21,18 @@ class File extends Model
         'size',
     ];
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function directory() {
+    public function directory()
+    {
         return $this->belongsTo(Directory::class);
     }
-}
 
+    public function share()
+    {
+        return $this->hasOne(Share::class);
+    }
+}

@@ -15,7 +15,7 @@ class FileController extends Controller
     public function upload(Request $request)
     {
         $request->validate([
-            'file' => 'required|file|max:10240', // 10MB max size
+            'file' => 'required|file|max:1024000', // 1000MB max size
         ]);
 
         $file = $request->file('file');
@@ -52,4 +52,3 @@ class FileController extends Controller
         return response()->json(['message' => 'File deleted successfully']);
     }
 }
-

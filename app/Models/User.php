@@ -5,11 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Str;
+
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasUuids;
+    use HasFactory, Notifiable, HasUlids;
+
 
     /**
      * Indicates if the IDs are auto-incrementing.
@@ -30,7 +34,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'is_admin',
         'is_active',
         'max_storage',
     ];
@@ -59,5 +62,13 @@ class User extends Authenticatable
             'is_active' => 'boolean',
             'max_storage' => 'integer',
         ];
+    }
+
+    public function initials(): string
+    {
+        return Str::of($this->name)
+            ->explode(' ')
+            ->map(fn (string $name) => Str::of($name)->substr(0, 1))
+            ->implode('');
     }
 }

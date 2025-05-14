@@ -13,17 +13,13 @@ return new class extends Migration
     {
         Schema::create('files', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('user_id');
-            $table->uuid('directory_id')->nullable();
+            $table->foreignUlid('user_id')->constrained('users')->onDelete('cascade'); 
+            $table->foreignUlid('directory_id')->nullable()->constrained('directories')->onDelete('set null'); 
             $table->string('name');
             $table->string('path');
             $table->unsignedBigInteger('size');
             $table->timestamps();
-        
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('directory_id')->references('id')->on('directories')->onDelete('set null');
         });
-        
     }
 
     /**

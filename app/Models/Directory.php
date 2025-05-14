@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 
 class Directory extends Model
 {
-    use HasFactory, HasUuids;
+    use HasFactory, HasUlids;
 
     public $incrementing = false;
     protected $keyType = 'string';
@@ -19,19 +19,28 @@ class Directory extends Model
         'parent_id',
     ];
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function parent() {
+    public function parent()
+    {
         return $this->belongsTo(Directory::class, 'parent_id');
     }
 
-    public function children() {
+    public function children()
+    {
         return $this->hasMany(Directory::class, 'parent_id');
     }
 
-    public function files() {
+    public function files()
+    {
         return $this->hasMany(File::class);
+    }
+
+    public function share()
+    {
+        return $this->hasOne(Share::class);
     }
 }

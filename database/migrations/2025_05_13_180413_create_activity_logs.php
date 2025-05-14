@@ -12,15 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('activity_logs', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->uuid('user_id')->nullable();
+            $table->ulid('id')->primary(); 
+            $table->foreignUlid('user_id')->nullable()->constrained('users')->onDelete('set null'); 
             $table->string('action'); // e.g., "uploaded file", "deleted directory"
-            $table->json('metadata')->nullable(); // additional context (e.g., file name, path, etc.)
+            $table->json('metadata')->nullable(); // Additional context (e.g., file name, path, etc.)
             $table->ipAddress('ip_address')->nullable();
             $table->text('user_agent')->nullable();
             $table->timestamps();
-        
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
         });
     }
 
